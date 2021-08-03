@@ -1,22 +1,28 @@
-import { NewGravatar, UpdatedGravatar } from '../generated/Gravity/Gravity'
-import { Gravatar } from '../generated/schema'
+import { Exchanged} from '../generated/Exchange/Exchange'
+import { Event } from '../generated/schema'
+import { log } from '@graphprotocol/graph-ts'
 
-export function handleNewGravatar(event: NewGravatar): void {
-  let gravatar = new Gravatar(event.params.id.toHex())
-  gravatar.owner = event.params.owner
-  gravatar.displayName = event.params.displayName
-  gravatar.imageUrl = event.params.imageUrl
-  gravatar.save()
+export function handleNewExchange(event: Exchanged): void {
+  let event_id = event.transaction.hash.toHex() + "-" + event.transactionLogIndex.toString() // unique id
+  let e = new Event(event_id)
+  e.address = event.address.toHex()
+  e.type = "Exchanged"
+  e.data = createJSONdata(event)
+  e.save();
 }
 
-export function handleUpdatedGravatar(event: UpdatedGravatar): void {
-  let id = event.params.id.toHex()
-  let gravatar = Gravatar.load(id)
-  if (gravatar == null) {
-    gravatar = new Gravatar(id)
+export function createJSONdata(event: Exchanged): String {
+  let s = '{'
+  s+='"exchanger": "' + event.params.exchanger.toHex().toString() + '", '
+  s+='"sellAmount": ' + event.params.sellAmount.toString() + ', '
+  s+='"buyAmount": ' + event.params.buyAmount.toString() + ', '
+  if (event.params.soldGold) {
+    s+='"soldGold": true'
   }
-  gravatar.owner = event.params.owner
-  gravatar.displayName = event.params.displayName
-  gravatar.imageUrl = event.params.imageUrl
-  gravatar.save()
+  else {
+    s+='"soldGold": false'
+  }
+  s+='}'
+  log.debug("data: {}",[s])
+  return s;
 }

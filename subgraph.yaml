@@ -1,27 +1,26 @@
 specVersion: 0.0.2
-description: Gravatar for Ethereum
-repository: https://github.com/graphprotocol/example-subgraph
+description: Celo generic indexing (Exchange)
+repository: https://github.com/teuul/celo-generic-exchange
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Gravity
-    network: mainnet
+    name: Exchange
+    network: celo
     source:
-      address: '0x2E645469f354BB4F5c8a05B3b30A929361cf77eC'
-      abi: Gravity
+      address: '0x67316300f17f063085Ca8bCa4bd3f7a5a3C66275'
+      abi: Exchange
+      startBlock: 8014441
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - Gravatar
+        - Event
       abis:
-        - name: Gravity
-          file: ./abis/Gravity.json
+        - name: Exchange
+          file: ./abis/Exchange.json
       eventHandlers:
-        - event: NewGravatar(uint256,address,string,string)
-          handler: handleNewGravatar
-        - event: UpdatedGravatar(uint256,address,string,string)
-          handler: handleUpdatedGravatar
+        - event: Exchanged(indexed address,uint256,uint256,bool)
+          handler: handleNewExchange
       file: ./src/mapping.ts
