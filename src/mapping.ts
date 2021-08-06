@@ -13,14 +13,6 @@ export function handleNewExchange(event: Exchanged): void {
 }
 
 export function createData(event: ethereum.Event, event_id: String): void {
-  for(let i=0;i<event.parameters.length;i++){
-    let field = new Field(event_id + "-" + i.toString());
-    field.name = event.parameters[i].name;
-    field.event = event_id.toString();
-    field.type = getKindString(event.parameters[i].value);
-    field.value = getValueString(event.parameters[i].value);
-    field.save();
-  }
   for (let i=0;i<event.parameters.length;i++) {
     if (event.parameters[i].value.kind<7) {
       let field = new Field(event_id + "-" + i.toString());
