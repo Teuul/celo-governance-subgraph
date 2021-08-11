@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 description: Celo generic indexing (Exchange)
-repository: https://github.com/teuul/celo-generic-exchange
+repository: https://github.com/teuul/celo-exchange
 schema:
   file: ./schema.graphql
 dataSources:
