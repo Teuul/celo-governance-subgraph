@@ -1,14 +1,13 @@
 {
-  "name": "celo-exchange",
+  "name": "celo-governance",
   "version": "0.1.0",
   "scripts": {
-    "build-contract": "solc contracts/Gravity.sol --abi -o abis --overwrite && solc contracts/Gravity.sol --bin -o bin --overwrite",
-    "create": "graph create teuul/celo-exchange --node https://api.thegraph.com/deploy/",
-    "create-local": "graph create teuul/celo-exchange --node http://127.0.0.1:8020",
+    "create": "graph create teuul/celo-governance --node https://api.thegraph.com/deploy/",
+    "create-local": "graph create teuul/celo-governance --node http://127.0.0.1:8020",
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy teuul/celo-exchange --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
-    "deploy-local": "graph deploy teuul/celo-exchange --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
+    "deploy": "graph deploy teuul/celo-governance --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy-local": "graph deploy teuul/celo-governance --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.20.1",

@@ -1,15 +1,15 @@
 specVersion: 0.0.2
-description: Celo generic indexing (Exchange)
-repository: https://github.com/teuul/celo-exchange
+description: Celo generic indexing (Governance)
+repository: https://github.com/teuul/celo-governance-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Exchange
+    name: Governance
     network: celo
     source:
-      address: '0x67316300f17f063085Ca8bCa4bd3f7a5a3C66275'
-      abi: Exchange
+      address: '0xD533Ca259b330c7A88f74E000a3FaEa2d63B7972'
+      abi: Governance
       startBlock: 8014441
     mapping:
       kind: ethereum/events
@@ -21,9 +21,19 @@ dataSources:
         - ArrayField
         - Item
       abis:
-        - name: Exchange
-          file: ./abis/Exchange.json
+        - name: Governance
+          file: ./abis/Governance.json
       eventHandlers:
-        - event: Exchanged(indexed address,uint256,uint256,bool)
-          handler: handleNewExchange
+        - event: ApproverSet(indexed address)
+          handler: handleApproverSet
+        - event: ConstitutionSet(indexed address,indexed bytes4,uint256)
+          handler: handleConstitutionSet
+        - event: ProposalQueued(indexed uint256,indexed address,uint256,uint256,uint256)
+          handler: handleProposalQueued
+        - event: ProposalUpvoted(indexed uint256,indexed address,uint256)
+          handler: handleProposalUpvoted
+        - event: ProposalUpvoteRevoked(indexed uint256,indexed address,uint256)
+          handler: handleProposalUpvoteRevoked
+        - event: ProposalVoted(indexed uint256,indexed address,uint256,uint256)
+          handler: handleProposalVoted
       file: ./src/mapping.ts
